@@ -1,0 +1,659 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aegean Elite Transfers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1a2340;
+    --ink-soft:#5b6280;
+    --paper:#f8f7f3;
+    --card:#ffffff;
+    --line:#e4e1d6;
+    --navy:#1a2340;
+    --navy-deep:#0f1529;
+    --champagne:#c9a86a;
+    --success:#2f7a5c;
+    --danger:#b2473f;
+    --radius:16px;
+    --display: 'Playfair Display', 'Iowan Old Style', serif;
+    --body: 'Manrope', -apple-system, Segoe UI, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);}
+  body{line-height:1.55;}
+  img,svg{max-width:100%;}
+  h1,h2,h3{font-family:var(--display);font-weight:600;text-wrap:balance;margin:0;}
+  a{color:var(--navy);}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+  section{padding:88px 0;}
+  @media (max-width:640px){section{padding:56px 0;}}
+
+  .nav{position:sticky;top:0;z-index:40;background:rgba(248,247,243,0.92);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);}
+  .nav-row{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto;gap:16px;flex-wrap:wrap;}
+  .brand{display:flex;align-items:center;gap:10px;color:var(--navy);font-family:var(--display);font-size:1.25rem;font-weight:700;}
+  .brand .mark{width:30px;height:30px;flex:none;}
+  .nav-links{display:flex;gap:22px;flex-wrap:wrap;}
+  .nav-links a{color:var(--ink);text-decoration:none;font-size:0.9rem;font-weight:500;}
+  .nav-links a:hover{color:var(--champagne);}
+  .nav-cta{background:var(--navy);color:#fff;border-radius:999px;padding:9px 18px;font-weight:600;font-size:0.88rem;text-decoration:none;}
+
+  .hero{position:relative;padding:0;overflow:hidden;background:linear-gradient(180deg,var(--navy-deep) 0%,var(--navy) 72%,var(--paper) 100%);color:#fff;}
+  .hero-inner{max-width:1180px;margin:0 auto;padding:96px 24px 48px;position:relative;z-index:2;text-align:center;}
+  .hero h1{font-size:clamp(2.1rem,4.6vw,3.4rem);color:#fff;max-width:820px;margin:0 auto;}
+  .hero p.lede{margin:20px auto 32px;max-width:580px;color:#d3d7e6;font-size:1.08rem;}
+  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;}
+  .btn{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:14px 26px;font-weight:600;font-size:0.95rem;text-decoration:none;border:1.5px solid transparent;cursor:pointer;}
+  .btn-primary{background:var(--champagne);color:#2c230f;}
+  .btn-primary:hover{background:#d8bb86;}
+  .btn-ghost{color:#fff;border-color:rgba(255,255,255,0.45);background:transparent;}
+  .btn-ghost:hover{border-color:#fff;}
+  .skyline{position:absolute;left:0;right:0;bottom:-2px;z-index:1;opacity:0.9;}
+  .hero-badges{display:flex;gap:28px;margin-top:48px;flex-wrap:wrap;justify-content:center;color:#b9bfd6;font-size:0.84rem;}
+  .hero-badges strong{color:#fff;display:block;font-family:var(--display);font-size:1.3rem;}
+
+  .eyebrow{color:var(--champagne);text-transform:uppercase;letter-spacing:0.12em;font-size:0.76rem;font-weight:700;margin-bottom:10px;}
+  .section-head{max-width:640px;margin:0 auto 44px;text-align:center;}
+  .section-head h2{font-size:clamp(1.8rem,3vw,2.4rem);}
+  .section-head p{color:var(--ink-soft);margin-top:12px;}
+
+  /* ---------- Destination tiles ---------- */
+  .dest-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;}
+  @media (max-width:760px){.dest-grid{grid-template-columns:1fr;}}
+  .dest-card{position:relative;border-radius:22px;overflow:hidden;color:#fff;min-height:320px;display:flex;flex-direction:column;justify-content:flex-end;padding:30px;isolation:isolate;}
+  .dest-card .bg{position:absolute;inset:0;z-index:-1;}
+  .dest-card.athens .bg{background:linear-gradient(160deg,#1b1f24,#3b414a);}
+  .dest-card.mykonos .bg{background:linear-gradient(160deg,#0f425a,#1c6f93);}
+  .dest-card h3{color:#fff;font-size:1.7rem;}
+  .dest-card p{color:#dfe2ea;margin:10px 0 18px;font-size:0.95rem;max-width:380px;}
+  .dest-card .go{align-self:flex-start;background:#fff;color:var(--navy);border-radius:999px;padding:11px 20px;font-weight:700;font-size:0.88rem;text-decoration:none;}
+  .dest-motif{position:absolute;right:-10px;bottom:-10px;opacity:0.9;width:55%;z-index:-1;}
+
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  @media (max-width:860px){.grid-3{grid-template-columns:1fr 1fr;}}
+  @media (max-width:560px){.grid-3{grid-template-columns:1fr;}}
+  .service-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:26px;}
+  .service-card .icon{width:40px;height:40px;margin-bottom:16px;color:var(--navy);}
+  .service-card h3{font-size:1.08rem;margin-bottom:8px;}
+  .service-card p{color:var(--ink-soft);font-size:0.92rem;margin:0;}
+
+  .fleet-strip{background:var(--navy-deep);color:#fff;}
+  .fleet-strip .section-head h2{color:#fff;}
+  .fleet-strip .section-head p{color:#b9bfd6;}
+  .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+  @media (max-width:900px){.grid-4{grid-template-columns:1fr 1fr;}}
+  @media (max-width:560px){.grid-4{grid-template-columns:1fr;}}
+  .fleet-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.14);border-radius:var(--radius);padding:22px;}
+  .fleet-card h3{color:#fff;font-size:1.05rem;}
+  .fleet-card .sub{color:#b9bfd6;font-size:0.82rem;margin-top:4px;}
+  .fleet-card .cap{display:flex;gap:14px;margin-top:16px;font-size:0.8rem;color:#e3e5ef;}
+
+  .why-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px 32px;}
+  @media (max-width:640px){.why-grid{grid-template-columns:1fr;}}
+  .why-item{display:flex;gap:14px;align-items:flex-start;}
+  .why-item .dot{width:34px;height:34px;flex:none;border-radius:50%;background:#f1e6cf;color:var(--champagne);display:flex;align-items:center;justify-content:center;font-weight:700;font-family:var(--display);}
+  .why-item h3{font-size:1rem;margin-bottom:4px;}
+  .why-item p{margin:0;color:var(--ink-soft);font-size:0.9rem;}
+
+  .testimonial-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:26px;}
+  .stars{color:var(--champagne);letter-spacing:2px;margin-bottom:12px;}
+  .testimonial-card p.quote{font-family:var(--display);font-size:1.05rem;margin:0 0 14px;}
+  .testimonial-card .who{font-size:0.82rem;color:var(--ink-soft);}
+  .placeholder-flag{display:inline-block;margin-top:10px;font-size:0.72rem;color:#8a6a28;background:#f1e6cf;padding:3px 9px;border-radius:999px;}
+
+  .book-shell{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:0;overflow:hidden;box-shadow:0 20px 50px -30px rgba(15,21,41,0.35);}
+  .book-steps{display:flex;border-bottom:1px solid var(--line);}
+  .book-steps div{flex:1;text-align:center;padding:14px 8px;font-size:0.78rem;font-weight:600;color:var(--ink-soft);border-bottom:3px solid transparent;}
+  .book-steps div.active{color:var(--navy);border-color:var(--champagne);}
+  .book-body{padding:32px;display:grid;grid-template-columns:1.1fr 0.9fr;gap:32px;}
+  @media (max-width:760px){.book-body{grid-template-columns:1fr;padding:24px;}}
+  .book-panel{display:none;}
+  .book-panel.active{display:block;}
+  label{display:block;font-size:0.82rem;font-weight:600;margin:16px 0 6px;}
+  label:first-child{margin-top:0;}
+  select, input, textarea{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:9px;font-size:0.95rem;font-family:inherit;background:#fff;}
+  select:focus, input:focus, textarea:focus{outline:2px solid var(--navy);outline-offset:1px;}
+  .car-options{display:grid;gap:10px;margin-top:6px;}
+  .car-option{display:flex;justify-content:space-between;align-items:center;border:1.5px solid var(--line);border-radius:10px;padding:12px 14px;cursor:pointer;}
+  .car-option.selected{border-color:var(--champagne);background:#fbf7ea;}
+  .car-name{font-weight:600;font-size:0.94rem;}
+  .car-sub{font-size:0.76rem;color:var(--ink-soft);}
+  .car-price{font-weight:700;color:var(--navy);font-family:var(--display);}
+  .step-actions{display:flex;gap:10px;margin-top:22px;}
+  .btn-dark{background:var(--navy);color:#fff;border:none;border-radius:9px;padding:12px 20px;font-weight:600;cursor:pointer;font-size:0.92rem;}
+  .btn-dark:disabled{background:#c3c6d6;cursor:not-allowed;}
+  .btn-outline{background:transparent;border:1.5px solid var(--line);border-radius:9px;padding:12px 20px;font-weight:600;cursor:pointer;font-size:0.92rem;color:var(--ink);}
+  .fare-panel{background:var(--navy-deep);color:#fff;border-radius:14px;padding:22px;}
+  .fare-panel .label{font-size:0.78rem;color:#b9bfd6;}
+  .fare-panel .amount{font-family:var(--display);font-size:2.1rem;margin:6px 0 2px;}
+  .fare-panel .meta{font-size:0.82rem;color:#b9bfd6;}
+  .summary-list dt{font-size:0.74rem;color:var(--ink-soft);margin-top:10px;text-transform:uppercase;letter-spacing:0.04em;}
+  .summary-list dd{margin:2px 0 0;font-weight:600;}
+  .notice{font-size:0.78rem;color:var(--ink-soft);margin-top:16px;padding-top:16px;border-top:1px solid var(--line);}
+  .confirm-box{text-align:center;padding:20px 0;}
+  .confirm-box .mark-ok{width:56px;height:56px;border-radius:50%;background:#dff1e7;color:var(--success);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:1.5rem;}
+  .confirm-ref{font-family:var(--display);font-size:1.7rem;font-weight:700;color:var(--navy);margin:10px 0;letter-spacing:0.03em;}
+  .err{color:var(--danger);font-size:0.85rem;margin-top:10px;display:none;}
+
+  footer{background:var(--navy-deep);color:#aab0c8;padding:56px 0 30px;font-size:0.86rem;}
+  .foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:32px;}
+  @media (max-width:700px){.foot-grid{grid-template-columns:1fr;}}
+  footer h4{color:#fff;font-family:var(--display);font-size:1rem;margin-bottom:12px;}
+  footer a{color:#aab0c8;text-decoration:none;display:block;margin-bottom:8px;}
+  footer a:hover{color:#fff;}
+  .foot-bottom{margin-top:40px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.1);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:0.78rem;}
+  .contact-line{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <div class="nav-row">
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="7" fill="#1a2340"/><path d="M6 20l8-13 8 13M6 20h16M10 24h12" stroke="#c9a86a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Aegean Elite Transfers
+    </div>
+    <nav class="nav-links">
+      <a href="#destinations">Destinations</a>
+      <a href="#services">Services</a>
+      <a href="#fleet">Fleet</a>
+      <a href="#why">Why Us</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="nav-cta" href="#book">Book Now</a>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Athens · Mykonos</div>
+    <h1>One trusted name for private transfers across Greece's two busiest gateways</h1>
+    <p class="lede">Aegean Elite Transfers runs the fixed-rate chauffeur network behind Athens Platinum Transfers and Mykonos VIP Transfers — same standards, same booking system, wherever you land.</p>
+    <div class="hero-ctas">
+      <a href="#book" class="btn btn-primary">Get an instant quote</a>
+      <a href="#destinations" class="btn btn-ghost">Choose your destination</a>
+    </div>
+    <div class="hero-badges">
+      <div><strong>2</strong>Islands &amp; cities covered</div>
+      <div><strong>75+</strong>Fixed routes</div>
+      <div><strong>24/7</strong>Airport &amp; port pickups</div>
+    </div>
+  </div>
+  <svg class="skyline" viewBox="0 0 1180 130" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <rect width="1180" height="130" fill="none"/>
+    <path d="M0 90 Q 295 60 590 90 T 1180 90 V130 H0 Z" fill="#0f1529"/>
+    <path d="M0 100 Q 295 75 590 100 T 1180 100 V130 H0 Z" fill="#141a30" opacity="0.8"/>
+  </svg>
+</section>
+
+<section id="destinations">
+  <div class="wrap">
+    <div class="eyebrow">Pick your destination</div>
+    <div class="section-head">
+      <h2>Two dedicated sites, one standard of service</h2>
+      <p>Each destination has its own fixed routes, fleet availability, and local team — follow through for the full booking experience.</p>
+    </div>
+    <div class="dest-grid">
+      <div class="dest-card athens">
+        <div class="bg"></div>
+        <svg class="dest-motif" viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <g fill="#ffffff" opacity="0.18">
+            <polygon points="60,140 90,70 120,140"/>
+            <rect x="68" y="95" width="5" height="45"/><rect x="82" y="95" width="5" height="45"/><rect x="96" y="95" width="5" height="45"/><rect x="110" y="95" width="5" height="45"/>
+          </g>
+        </svg>
+        <h3>Athens Platinum Transfers</h3>
+        <p>Airport, Piraeus port, Attica Riviera — the chauffeur network for Greece's capital.</p>
+        <a class="go" href="../athens-platinum-transfers/" target="_blank" rel="noopener">Explore Athens transfers →</a>
+      </div>
+      <div class="dest-card mykonos">
+        <div class="bg"></div>
+        <svg class="dest-motif" viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <g fill="#ffffff" opacity="0.2">
+            <rect x="60" y="90" width="50" height="30" rx="4"/>
+            <circle cx="85" cy="90" r="16"/>
+            <rect x="120" y="100" width="36" height="20" rx="4"/>
+          </g>
+        </svg>
+        <h3>Mykonos VIP Transfers</h3>
+        <p>Airport, New Port, villas, and every beach club on the island.</p>
+        <a class="go" href="../mykonos-vip-transfers/" target="_blank" rel="noopener">Explore Mykonos transfers →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services" style="background:#efede4;">
+  <div class="wrap">
+    <div class="eyebrow">What we drive</div>
+    <div class="section-head">
+      <h2>The same fixed-rate standard, in both places</h2>
+      <p>Whichever destination you book, the service model is identical.</p>
+    </div>
+    <div class="grid-3">
+      <div class="service-card">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 16l1.5-5A3 3 0 0 1 7.4 9h9.2a3 3 0 0 1 2.9 2L21 16"/><rect x="2.5" y="16" width="19" height="4.5" rx="1.5"/><circle cx="7" cy="20.5" r="1.3"/><circle cx="17" cy="20.5" r="1.3"/></svg>
+        <h3>Airport &amp; port transfers</h3>
+        <p>Fixed rates from every major airport and port in both destinations, with flight/ferry tracking built in.</p>
+      </div>
+      <div class="service-card">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+        <h3>Hourly chauffeur</h3>
+        <p>Keep a car and driver on standby for a full day of meetings, sightseeing, or island hopping between stops.</p>
+      </div>
+      <div class="service-card">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 21V9l8-6 8 6v12"/><path d="M9 21v-6h6v6"/></svg>
+        <h3>Hotel &amp; villa transfers</h3>
+        <p>Direct pickup from the lobby or the gate, coordinated with your check-in and check-out times.</p>
+      </div>
+      <div class="service-card">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="7" width="18" height="12" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+        <h3>Business transfers</h3>
+        <p>Account billing for repeat corporate travel between our Athens and Mykonos operations.</p>
+      </div>
+      <div class="service-card">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-4.6-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.4-7 10-7 10z"/></svg>
+        <h3>Weddings &amp; events</h3>
+        <p>Multi-vehicle convoys and guest shuttles, coordinated end to end by one booking team.</p>
+      </div>
+      <div class="service-card">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 14l4-9 4 9M3 14h8M13 14l4-9 4 9M13 14h8"/><path d="M7 21h10"/></svg>
+        <h3>Cruise &amp; yacht transfers</h3>
+        <p>Timed to your ship's schedule at Piraeus, Lavrio, or either of Mykonos's two ports.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="fleet-strip" id="fleet">
+  <div class="wrap">
+    <div class="eyebrow">The fleet</div>
+    <div class="section-head">
+      <h2>One quote, four ways to arrive</h2>
+      <p>The same vehicle classes run every route, in Athens and in Mykonos.</p>
+    </div>
+    <div class="grid-4" id="fleetCards"></div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="wrap">
+    <div class="eyebrow">Why riders choose us</div>
+    <div class="section-head">
+      <h2>What's included on every ride, everywhere</h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-item"><div class="dot">1</div><div><h3>Fixed, transparent rates</h3><p>The price you're quoted is the price you pay, in either destination.</p></div></div>
+      <div class="why-item"><div class="dot">2</div><div><h3>Meet &amp; greet</h3><p>Your driver waits with a name board, at the airport gate or dockside.</p></div></div>
+      <div class="why-item"><div class="dot">3</div><div><h3>English &amp; Greek speaking drivers</h3><p>Every driver is vetted, licensed, and briefed on your itinerary in advance.</p></div></div>
+      <div class="why-item"><div class="dot">4</div><div><h3>Free cancellation</h3><p>Cancel or reschedule up to 24 hours before pickup at no charge.</p></div></div>
+      <div class="why-item"><div class="dot">5</div><div><h3>Flight &amp; ferry tracking</h3><p>Pickup times adjust automatically if your flight or ferry runs early or late.</p></div></div>
+      <div class="why-item"><div class="dot">6</div><div><h3>One booking system</h3><p>Book Athens and Mykonos transfers from the same account and reference format.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="testimonials" style="background:#efede4;">
+  <div class="wrap">
+    <div class="eyebrow">Reviews</div>
+    <div class="section-head">
+      <h2>What riders say</h2>
+    </div>
+    <div class="grid-3">
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="quote">"Flew into Athens and out through Mykonos two weeks later — same booking app, same reliable pickup both times."</p>
+        <div class="who">Example guest — Multi-city trip</div>
+        <span class="placeholder-flag">Placeholder — swap in a real review</span>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="quote">"Our travel agent books both legs through Aegean Elite now — one invoice, one point of contact."</p>
+        <div class="who">Example guest — Travel agent booking</div>
+        <span class="placeholder-flag">Placeholder — swap in a real review</span>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="quote">"Fixed price quoted by email before we even landed. No surprises either end of the trip."</p>
+        <div class="who">Example guest — Pre-booked itinerary</div>
+        <span class="placeholder-flag">Placeholder — swap in a real review</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="book">
+  <div class="wrap">
+    <div class="eyebrow">Get a quote</div>
+    <div class="section-head">
+      <h2>Request a transfer, Athens or Mykonos</h2>
+      <p>Pick a destination and route below for an instant estimate — or follow through to the dedicated site for the full fixed-route list.</p>
+    </div>
+
+    <div class="book-shell">
+      <div class="book-steps">
+        <div class="step-ind active" data-step="1">1. Route</div>
+        <div class="step-ind" data-step="2">2. Vehicle</div>
+        <div class="step-ind" data-step="3">3. Details</div>
+        <div class="step-ind" data-step="done">4. Confirmed</div>
+      </div>
+      <div class="book-body">
+        <div>
+          <div class="book-panel active" data-panel="1">
+            <label for="destSelect">Destination</label>
+            <select id="destSelect">
+              <option value="athens">Athens</option>
+              <option value="mykonos">Mykonos</option>
+            </select>
+
+            <label for="routeSelect">Route</label>
+            <select id="routeSelect"></select>
+
+            <label for="pickupDate">Pickup date &amp; time</label>
+            <input type="datetime-local" id="pickupDate">
+
+            <label for="pax">Passengers</label>
+            <input type="number" id="pax" min="1" max="8" value="2">
+
+            <div class="step-actions">
+              <button class="btn-dark" id="toStep2">Continue</button>
+            </div>
+          </div>
+
+          <div class="book-panel" data-panel="2">
+            <label>Choose your vehicle</label>
+            <div class="car-options" id="carOptions"></div>
+            <div class="step-actions">
+              <button class="btn-outline" data-back="1">Back</button>
+              <button class="btn-dark" id="toStep3" disabled>Continue</button>
+            </div>
+          </div>
+
+          <div class="book-panel" data-panel="3">
+            <label for="custName">Full name</label>
+            <input type="text" id="custName" placeholder="Jane Doe">
+            <label for="custPhone">Phone (with country code)</label>
+            <input type="tel" id="custPhone" placeholder="+30 69xxxxxxxx">
+            <label for="custEmail">Email (optional)</label>
+            <input type="email" id="custEmail" placeholder="jane@example.com">
+            <label for="custNotes">Flight/ferry number / notes</label>
+            <textarea id="custNotes" rows="2" placeholder="e.g. AA 123 arriving from JFK"></textarea>
+            <div class="step-actions">
+              <button class="btn-outline" data-back="2">Back</button>
+              <button class="btn-dark" id="toConfirm" disabled>Confirm booking</button>
+            </div>
+            <div class="err" id="bookErr"></div>
+          </div>
+
+          <div class="book-panel" data-panel="done">
+            <div class="confirm-box">
+              <div class="mark-ok">✓</div>
+              <h3>Booking confirmed</h3>
+              <p>Your reference number</p>
+              <div class="confirm-ref" id="confirmRef"></div>
+              <p style="color:var(--ink-soft);font-size:0.85rem;">Save this with your phone number to manage the booking later.</p>
+              <button class="btn-outline" id="bookAgain">Book another ride</button>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="fare-panel">
+            <div class="label">Estimated fare</div>
+            <div class="amount" id="fareAmount">€—</div>
+            <div class="meta" id="fareMeta">Choose a route to see pricing</div>
+          </div>
+          <dl class="summary-list" id="summaryList" style="margin-top:18px;"></dl>
+          <div class="notice">
+            This widget calculates fares locally for preview. Point its submit handler at your deployed <code>POST /api/bookings</code> endpoint (same formula &amp; vehicle classes as the backend already built) to persist real bookings — the code already tries that endpoint first and only falls back to this demo confirmation if it's unreachable.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <h4>Aegean Elite Transfers</h4>
+        <p style="max-width:380px;">The umbrella brand behind Athens Platinum Transfers and Mykonos VIP Transfers — one booking standard, two destinations.</p>
+        <div class="contact-line">☎ +30 211 000 0000</div>
+        <div class="contact-line">✉ bookings@aegeanelitetransfers.example</div>
+      </div>
+      <div>
+        <h4>Destinations</h4>
+        <a href="../athens-platinum-transfers/" target="_blank" rel="noopener">Athens Platinum Transfers</a>
+        <a href="../mykonos-vip-transfers/" target="_blank" rel="noopener">Mykonos VIP Transfers</a>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <a href="#">Privacy policy</a>
+        <a href="#">Terms &amp; conditions</a>
+        <a href="#">Cancellation policy</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Aegean Elite Transfers. All rights reserved.</span>
+      <span>Covering Athens &amp; Mykonos</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var PRICING = { base: 3.5, perKm: 1.2, perMin: 0.25, minFare: 6.0, currency: '€' };
+  var CAR_CLASSES = [
+    { key:'economy',  label:'Economy',       mult:1.0, maxPax:4, maxLuggage:2, sub:'Sedan · up to 4 passengers' },
+    { key:'comfort',  label:'Comfort',       mult:1.3, maxPax:4, maxLuggage:3, sub:'Premium sedan · up to 4 passengers' },
+    { key:'business', label:'Business',      mult:1.7, maxPax:4, maxLuggage:3, sub:'Executive sedan · up to 4 passengers' },
+    { key:'van',      label:'Van / Minibus', mult:1.9, maxPax:8, maxLuggage:8, sub:'Minivan · up to 8 passengers' }
+  ];
+  var ROUTES_BY_DEST = {
+    athens: [
+      { id:'ath-syntagma',   label:'Athens Airport (ATH) → Syntagma Square', km:33, min:35 },
+      { id:'ath-piraeus',    label:'Athens Airport (ATH) → Piraeus Port',    km:45, min:45 },
+      { id:'ath-glyfada',    label:'Athens Airport (ATH) → Glyfada',          km:27, min:30 },
+      { id:'syntagma-piraeus',label:'Syntagma Square → Piraeus Port',         km:11, min:20 }
+    ],
+    mykonos: [
+      { id:'jmk-town',     label:'Mykonos Airport (JMK) → Mykonos Town', km:4,  min:10 },
+      { id:'jmk-psarou',   label:'Mykonos Airport (JMK) → Psarou Beach', km:7,  min:12 },
+      { id:'port-town',    label:'New Port (Tourlos) → Mykonos Town',    km:2.5,min:7  },
+      { id:'jmk-elia',     label:'Mykonos Airport (JMK) → Elia Beach',   km:10, min:18 }
+    ]
+  };
+
+  function fare(km, min, mult){
+    var raw = (PRICING.base + km*PRICING.perKm + min*PRICING.perMin) * mult;
+    return Math.max(raw, PRICING.minFare);
+  }
+  function money(v){ return PRICING.currency + v.toFixed(2); }
+
+  var destSelect = document.getElementById('destSelect');
+  var routeSelect = document.getElementById('routeSelect');
+
+  function populateRoutes(){
+    routeSelect.innerHTML = '';
+    ROUTES_BY_DEST[destSelect.value].forEach(function(r){
+      var opt = document.createElement('option');
+      opt.value = r.id; opt.textContent = r.label;
+      routeSelect.appendChild(opt);
+    });
+  }
+  populateRoutes();
+  destSelect.addEventListener('change', function(){ populateRoutes(); updateFarePanel(); renderCarOptions(); });
+
+  var fleetCards = document.getElementById('fleetCards');
+  CAR_CLASSES.forEach(function(c){
+    var div = document.createElement('div');
+    div.className = 'fleet-card';
+    div.innerHTML = '<h3>'+c.label+'</h3><div class="sub">'+c.sub+'</div><div class="cap">'+c.maxPax+' passengers · '+c.maxLuggage+' bags</div>';
+    fleetCards.appendChild(div);
+  });
+
+  var state = { carClass:null };
+
+  function selectedRoute(){
+    return ROUTES_BY_DEST[destSelect.value].find(function(r){ return r.id === routeSelect.value; });
+  }
+
+  function goStep(step){
+    document.querySelectorAll('.book-panel').forEach(function(p){ p.classList.remove('active'); });
+    document.querySelector('[data-panel="'+step+'"]').classList.add('active');
+    document.querySelectorAll('.step-ind').forEach(function(s){ s.classList.remove('active'); });
+    var ind = document.querySelector('.step-ind[data-step="'+step+'"]');
+    if (ind) ind.classList.add('active');
+  }
+
+  function renderCarOptions(){
+    var pax = parseInt(document.getElementById('pax').value, 10) || 1;
+    var route = selectedRoute();
+    var container = document.getElementById('carOptions');
+    container.innerHTML = '';
+    CAR_CLASSES.forEach(function(c){
+      var disabled = pax > c.maxPax;
+      if (state.carClass === c.key && disabled) { state.carClass = null; }
+      var div = document.createElement('div');
+      div.className = 'car-option' + (state.carClass===c.key ? ' selected':'');
+      div.style.opacity = disabled ? 0.4 : 1;
+      div.style.cursor = disabled ? 'not-allowed' : 'pointer';
+      var price = route ? money(fare(route.km, route.min, c.mult)) : '—';
+      div.innerHTML = '<div><div class="car-name">'+c.label+'</div><div class="car-sub">Up to '+c.maxPax+' passengers · '+c.maxLuggage+' bags</div></div><div class="car-price">'+price+'</div>';
+      if (!disabled) {
+        div.addEventListener('click', function(){
+          state.carClass = c.key;
+          renderCarOptions();
+          updateFarePanel();
+          document.getElementById('toStep3').disabled = false;
+        });
+      }
+      container.appendChild(div);
+    });
+  }
+
+  function updateFarePanel(){
+    var route = selectedRoute();
+    var cls = CAR_CLASSES.find(function(c){ return c.key === state.carClass; });
+    if (route && cls) {
+      var f = fare(route.km, route.min, cls.mult);
+      document.getElementById('fareAmount').textContent = money(f);
+      document.getElementById('fareMeta').textContent = route.label + ' · ' + route.km + ' km · ~' + route.min + ' min · ' + cls.label;
+    } else if (route) {
+      document.getElementById('fareAmount').textContent = '€—';
+      document.getElementById('fareMeta').textContent = route.label + ' · choose a vehicle to see the price';
+    } else {
+      document.getElementById('fareAmount').textContent = '€—';
+      document.getElementById('fareMeta').textContent = 'Choose a route to see pricing';
+    }
+  }
+
+  function renderSummary(){
+    var route = selectedRoute();
+    var cls = CAR_CLASSES.find(function(c){ return c.key === state.carClass; });
+    var dt = document.getElementById('pickupDate').value;
+    var list = document.getElementById('summaryList');
+    list.innerHTML =
+      '<dt>Destination</dt><dd>'+(destSelect.value==='athens'?'Athens':'Mykonos')+'</dd>' +
+      '<dt>Route</dt><dd>'+(route?route.label:'—')+'</dd>' +
+      '<dt>When</dt><dd>'+(dt ? new Date(dt).toLocaleString() : '—')+'</dd>' +
+      '<dt>Vehicle</dt><dd>'+(cls?cls.label:'—')+'</dd>' +
+      '<dt>Passengers</dt><dd>'+document.getElementById('pax').value+'</dd>';
+  }
+
+  routeSelect.addEventListener('change', function(){ updateFarePanel(); renderCarOptions(); });
+  document.getElementById('pax').addEventListener('input', renderCarOptions);
+
+  document.getElementById('toStep2').addEventListener('click', function(){
+    renderCarOptions();
+    goStep(2);
+  });
+  document.getElementById('toStep3').addEventListener('click', function(){
+    renderSummary();
+    goStep(3);
+  });
+  document.querySelectorAll('[data-back]').forEach(function(btn){
+    btn.addEventListener('click', function(){ goStep(btn.dataset.back); });
+  });
+
+  function validateContact(){
+    var name = document.getElementById('custName').value.trim();
+    var phone = document.getElementById('custPhone').value.trim();
+    document.getElementById('toConfirm').disabled = !(name.length>1 && phone.length>5);
+  }
+  ['custName','custPhone'].forEach(function(id){
+    document.getElementById(id).addEventListener('input', validateContact);
+  });
+
+  function genReference(){
+    var chars = '23456789ABCDEFGHJKMNPQRSTUVWXYZ';
+    var ref = 'AET-';
+    for (var i=0;i<6;i++) ref += chars[Math.floor(Math.random()*chars.length)];
+    return ref;
+  }
+
+  document.getElementById('toConfirm').addEventListener('click', function(){
+    var route = selectedRoute();
+    var cls = CAR_CLASSES.find(function(c){ return c.key === state.carClass; });
+    var errBox = document.getElementById('bookErr');
+    errBox.style.display = 'none';
+    if (!route || !cls || !document.getElementById('pickupDate').value) {
+      errBox.textContent = 'Please complete the route, vehicle and pickup time.';
+      errBox.style.display = 'block';
+      return;
+    }
+    var payload = {
+      pickupAddress: route.label.split('→')[0].trim(),
+      dropoffAddress: route.label.split('→')[1].trim(),
+      distanceKm: route.km,
+      durationMin: route.min,
+      pickupDatetime: new Date(document.getElementById('pickupDate').value).toISOString(),
+      carClass: cls.key,
+      passengers: document.getElementById('pax').value,
+      customerName: document.getElementById('custName').value.trim(),
+      customerPhone: document.getElementById('custPhone').value.trim(),
+      customerEmail: document.getElementById('custEmail').value.trim(),
+      notes: document.getElementById('custNotes').value.trim()
+    };
+
+    fetch('/api/bookings', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function(r){
+      if (!r.ok) throw new Error('backend not available');
+      return r.json();
+    }).then(function(data){
+      document.getElementById('confirmRef').textContent = data.reference;
+      goStep('done');
+    }).catch(function(){
+      document.getElementById('confirmRef').textContent = genReference();
+      goStep('done');
+    });
+  });
+
+  document.getElementById('bookAgain').addEventListener('click', function(){
+    window.location.hash = '';
+    location.reload();
+  });
+
+  (function(){
+    var d = new Date(Date.now() + 2*60*60*1000);
+    d.setMinutes(Math.ceil(d.getMinutes()/15)*15, 0, 0);
+    function pad(n){ return String(n).padStart(2,'0'); }
+    var local = d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+'T'+pad(d.getHours())+':'+pad(d.getMinutes());
+    var el = document.getElementById('pickupDate');
+    el.value = local; el.min = local;
+  })();
+
+  updateFarePanel();
+  renderCarOptions();
+})();
+</script>
+</body>
+</html>
